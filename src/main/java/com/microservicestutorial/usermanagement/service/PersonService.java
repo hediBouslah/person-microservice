@@ -3,6 +3,7 @@ package com.microservicestutorial.usermanagement.service;
 import com.microservicestutorial.usermanagement.exception.TechnicalException;
 import com.microservicestutorial.usermanagement.persistence.Person;
 import com.microservicestutorial.usermanagement.persistence.PersonRepository;
+import com.microservicestutorial.usermanagement.resource.mapper.PersonMapper;
 import com.microservicestutorial.usermanagement.resource.to.PersonRequest;
 import com.microservicestutorial.usermanagement.resource.to.PersonResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,6 @@ public class PersonService {
                 calendar.get(Calendar.MONTH) + 1, //Calendar.Month {0 - 11}
                 calendar.get(Calendar.DAY_OF_MONTH)
         );
-//      Period p = Period.between(birthday, today);
         return today.getYear() - birthday.getYear();
     }
 
