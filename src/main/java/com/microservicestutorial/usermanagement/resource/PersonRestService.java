@@ -26,6 +26,8 @@ public class PersonRestService {
 //        return new ResponseEntity<>(this.personService.list(), HttpStatus.OK);
 //    }
 
+
+
     @PostMapping("/")
     ResponseEntity<PersonResponse> createPerson(@RequestBody PersonRequest personRequest){
         return new ResponseEntity<PersonResponse>(personService.createPerson(personRequest), HttpStatus.CREATED);
