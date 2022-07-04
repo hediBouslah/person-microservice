@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: person-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/persons
+    username: demo
+    password: demo
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  flyway:
+    locations: db/migration
+    #baseline-version: '0.0.0.0'
+    validate-on-migrate: true
+    enabled: true
+
+server:
+  port: 8081
+
+
