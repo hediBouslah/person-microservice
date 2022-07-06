@@ -1,5 +1,5 @@
 create sequence person_id_seq increment by 1 start with 1 cache 20;
-
+create sequence address_id_seq increment by 1 start with 1 cache 20;
 create table t_persons(
                           id bigint DEFAULT nextval('person_id_seq') constraint t_persons_pkey primary key,
                           first_name varchar(100),

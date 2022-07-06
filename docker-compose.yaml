@@ -5,8 +5,8 @@ services:
     container_name: postgres_db
     restart: always
     environment:
-      POSTGRES_USER: demo
-      POSTGRES_PASSWORD: demo
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Test123.MW
       POSTGRES_DB: persons
     ports:
-      - '5432:5432'
+      - '5433:5432'

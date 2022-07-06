@@ -22,6 +22,18 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+	//implementation "io.springfox:springfox-boot-starter:3.0.0"
+
+//	implementation "io.springfox:springfox-documentation.spring.web"
+
+	//implementation 'io.springfox:springfox-spring-web:3.0.0'
+
+	compileOnly group: 'io.springfox', name: 'springfox-swagger2', version: '2.7.0'
+	compileOnly group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.7.0'
+
+	compileOnly "org.springframework.boot:spring-boot-starter-web"
+
 	compileOnly "org.flywaydb:flyway-core:8.5.13"
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'org.postgresql:postgresql'

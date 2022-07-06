@@ -2,20 +2,27 @@ spring:
   application:
     name: person-service
   datasource:
-    url: jdbc:postgresql://localhost:5432/persons
-    username: demo
-    password: demo
+    url: jdbc:postgresql://localhost:5433/persons
+    username: postgres
+    password: Test123.MW
   jpa:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
   flyway:
     locations: db/migration
+    #baselineOnMigrate: true
     #baseline-version: '0.0.0.0'
     validate-on-migrate: true
     enabled: true
 
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
 server:
   port: 8081
+
+
 
 
