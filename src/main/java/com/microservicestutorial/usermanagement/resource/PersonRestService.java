@@ -1,7 +1,5 @@
 package com.microservicestutorial.usermanagement.resource;
 
-import com.microservicestutorial.usermanagement.persistence.Person;
-import com.microservicestutorial.usermanagement.persistence.PersonRepository;
 import com.microservicestutorial.usermanagement.resource.to.PersonRequest;
 import com.microservicestutorial.usermanagement.resource.to.PersonResponse;
 import com.microservicestutorial.usermanagement.service.PersonService;
@@ -13,12 +11,11 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value = "/api/v1/persons")
 public class PersonRestService {
-    @Autowired
-    PersonService personService;
+    private final PersonService personService;
 
-    @GetMapping
-    String hello(){
-        return "hello";
+    @Autowired
+    public PersonRestService(PersonService personService) {
+        this.personService = personService;
     }
 
     @PostMapping("/")
