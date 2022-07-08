@@ -1,6 +1,7 @@
 package com.microservicestutorial.usermanagement.service;
 
 import com.microservicestutorial.usermanagement.exception.TechnicalException;
+import com.microservicestutorial.usermanagement.persistence.Address;
 import com.microservicestutorial.usermanagement.persistence.Person;
 import com.microservicestutorial.usermanagement.persistence.PersonRepository;
 import com.microservicestutorial.usermanagement.resource.mapper.PersonMapper;
@@ -9,10 +10,12 @@ import com.microservicestutorial.usermanagement.resource.to.PersonResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.NamedQuery;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PersonService {
@@ -51,8 +54,26 @@ public class PersonService {
         return PersonMapper.MapToPersonResponse(personEntityResult);
     }
 
-    public List<Person> list() {
-        return personRepository.findAll();
+    //public List<Person> list() {
+//        return personRepository.findAll();
+//    }
+
+    public PersonResponse updatePerson(PersonRequest personRequest, Long id) {
+
+        Person existingPersonEntity  = personRepository.findById(id).orElseThrow(()-> new TechnicalException("Not found"));
+
+        existingPersonEntity.setFirstName(personRequest.getFirstName());
+        existingPersonEntity.setLastName(personRequest.getLastName());
+        existingPersonEntity.setBirthdate(personRequest.getBirthdate());
+        existingPersonEntity.setPhoneNumber(personRequest.getPhoneNumber());
+        existingPersonEntity.setDepartmentId(personRequest.getDepartmentId());
+
+        Person personEntityResult = personRepository.save(existingPersonEntity);
+        return PersonMapper.MapToPersonResponse(personEntityResult);
+    }
+
+    public List<Person> getPs() {
+        return personRepository.getPs();
     }
 
 }
