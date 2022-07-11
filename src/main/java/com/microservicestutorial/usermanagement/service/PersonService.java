@@ -1,6 +1,7 @@
 package com.microservicestutorial.usermanagement.service;
 
 import com.microservicestutorial.usermanagement.exception.TechnicalException;
+import com.microservicestutorial.usermanagement.persistence.Address;
 import com.microservicestutorial.usermanagement.persistence.Person;
 import com.microservicestutorial.usermanagement.persistence.PersonRepository;
 import com.microservicestutorial.usermanagement.resource.mapper.PersonMapper;
@@ -52,7 +53,6 @@ public class PersonService {
 
         return PersonMapper.MapToPersonResponse(personEntityResult);
     }
-
     public List<Person> list() {
         return personRepository.findAll();
     }
@@ -118,6 +118,18 @@ public class PersonService {
         return Optional.ofNullable(personRepository.findPersonByLastName(lastName));
     }
 */
+
+
+
+    public PersonResponse createPersonWithAddress (PersonRequest personRequest,Address address){
+
+
+
+
+        return null;
+    }
+
+
 
 
 
