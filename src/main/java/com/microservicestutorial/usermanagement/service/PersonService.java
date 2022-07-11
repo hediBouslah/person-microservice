@@ -1,7 +1,6 @@
 package com.microservicestutorial.usermanagement.service;
 
 import com.microservicestutorial.usermanagement.exception.TechnicalException;
-import com.microservicestutorial.usermanagement.persistence.Address;
 import com.microservicestutorial.usermanagement.persistence.Person;
 import com.microservicestutorial.usermanagement.persistence.PersonRepository;
 import com.microservicestutorial.usermanagement.resource.mapper.PersonMapper;
@@ -10,12 +9,10 @@ import com.microservicestutorial.usermanagement.resource.to.PersonResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.NamedQuery;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PersonService {
@@ -54,13 +51,8 @@ public class PersonService {
         return PersonMapper.MapToPersonResponse(personEntityResult);
     }
 
-    //public List<Person> list() {
-//        return personRepository.findAll();
-//    }
-
     public PersonResponse updatePerson(PersonRequest personRequest, Long id) {
-
-        Person existingPersonEntity  = personRepository.findById(id).orElseThrow(()-> new TechnicalException("Not found"));
+        Person existingPersonEntity = getById(id);
 
         existingPersonEntity.setFirstName(personRequest.getFirstName());
         existingPersonEntity.setLastName(personRequest.getLastName());
@@ -76,4 +68,7 @@ public class PersonService {
         return personRepository.getPs();
     }
 
+    public Person getById(Long id) {
+        return personRepository.findById(id).orElseThrow(() -> new TechnicalException("Not found"));
+    }
 }
