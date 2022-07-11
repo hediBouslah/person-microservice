@@ -8,9 +8,9 @@ import com.microservicestutorial.usermanagement.resource.mapper.PersonMapper;
 import com.microservicestutorial.usermanagement.resource.to.PersonRequest;
 import com.microservicestutorial.usermanagement.resource.to.PersonResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.NamedQuery;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -53,93 +53,27 @@ public class PersonService {
 
         return PersonMapper.MapToPersonResponse(personEntityResult);
     }
-    public List<Person> list() {
-        return personRepository.findAll();
+
+    //public List<Person> list() {
+//        return personRepository.findAll();
+//    }
+
+    public PersonResponse updatePerson(PersonRequest personRequest, Long id) {
+
+        Person existingPersonEntity  = personRepository.findById(id).orElseThrow(()-> new TechnicalException("Not found"));
+
+        existingPersonEntity.setFirstName(personRequest.getFirstName());
+        existingPersonEntity.setLastName(personRequest.getLastName());
+        existingPersonEntity.setBirthdate(personRequest.getBirthdate());
+        existingPersonEntity.setPhoneNumber(personRequest.getPhoneNumber());
+        existingPersonEntity.setDepartmentId(personRequest.getDepartmentId());
+
+        Person personEntityResult = personRepository.save(existingPersonEntity);
+        return PersonMapper.MapToPersonResponse(personEntityResult);
     }
 
-   /* public Person updatePerson(Person newPerson) {
-
-        Optional<Person> personToUpdate = personRepository.findById(newPerson.getId());
-        if (personToUpdate.isPresent()) {
-            Person _person = personToUpdate.get();
-            _person.setFirstName(newPerson.getFirstName());
-            _person.setLastName(newPerson.getLastName());
-            _person.setPhoneNumber(newPerson.getPhoneNumber());
-            _person.setBirthdate(newPerson.getBirthdate());
-            return personRepository.save(_person);
-        } else
-
-            return null;
-    }*/
-
-    public PersonResponse updatePerson(PersonRequest newPerson) {
-        Person personEntity = PersonMapper.MapToPersonEntity(newPerson);
-        Person personEntityResult;
-        Optional<Person> personToUpdate = personRepository.findById(newPerson.getId());
-        if (personToUpdate.isPresent()) {
-            Person _person = personToUpdate.get();
-            _person.setFirstName(newPerson.getFirstName());
-            _person.setLastName(newPerson.getLastName());
-            _person.setPhoneNumber(newPerson.getPhoneNumber());
-            _person.setBirthdate(newPerson.getBirthdate());
-            _person.setDepartmentId(newPerson.getDepartmentId());
-
-            personEntityResult = personRepository.save(_person);
-
-        return PersonMapper.MapToPersonResponse(personEntityResult);}
-        else
-
-        return null;
+    public List<Person> getPs() {
+        return personRepository.getPs();
     }
-
-
-
-   /* public Optional<PersonResponse> findPersonById(Long id) {
-
-        Person personEntity = PersonMapper.MapToPersonEntity(id);
-        Person personEntityResult;
-
-        Optional<Person> person = personRepository.findById(id);
-        {
-            if (person.isPresent()) {
-                return PersonMapper.MapToPersonResponse(personEntityResult);
-            }
-            return null;
-        }
-    }
-
-
-
-    public List<Person> findAllOrderByFirstNameAsc(){
-       return personRepository.findAll(Sort.by("firstName"));
-    }
-
-    public Optional<List<Person>> findPersonByLastName(String lastName) {
-        return Optional.ofNullable(personRepository.findPersonByLastName(lastName));
-    }
-*/
-
-
-
-    public PersonResponse createPersonWithAddress (PersonRequest personRequest,Address address){
-
-
-
-
-        return null;
-    }
-
-
-
-
 
 }
-
-
-
-
-
-
-
-
-

@@ -1,16 +1,19 @@
 package com.microservicestutorial.usermanagement.persistence;
 
-import com.microservicestutorial.usermanagement.resource.to.PersonRequest;
-import com.microservicestutorial.usermanagement.resource.to.PersonResponse;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
-public interface PersonRepository extends JpaRepository<Person, Long> {
-    Optional<Person> findById(long id);
-   // List<Person> findPersonByLastName(String lastName);
-    //void deletePersonByIdPerson(Long idPerson);
+public interface PersonRepository extends CrudRepository<Person, Long> {
+
+
+    @Query(value = "select * from t_persons" ,nativeQuery = true)
+    List<Person> getPs();
+
+    @Query(value = "select * from t_addresses a where a.person_id = t_persons.id", nativeQuery = true)
+    Address getAddressFromPerson(Long personId);
+
 }
