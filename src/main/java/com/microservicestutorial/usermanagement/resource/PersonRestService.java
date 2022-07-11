@@ -33,7 +33,7 @@ public class PersonRestService {
 
     @GetMapping("/")
     List<Person> getAll() {
-        return personService.getPs();
+        return personService.getAllPersons();
     }
 
     @GetMapping("/{id}")

@@ -64,8 +64,8 @@ public class PersonService {
         return PersonMapper.MapToPersonResponse(personEntityResult);
     }
 
-    public List<Person> getPs() {
-        return personRepository.getPs();
+    public List<Person> getAllPersons() {
+        return personRepository.getPersons();
     }
 
     public Person getById(Long id) {
