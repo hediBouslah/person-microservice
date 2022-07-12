@@ -38,6 +38,12 @@ public class PersonRestService {
 
     @GetMapping("/{id}")
     Person getPersonById(@PathVariable Long id) {
-        return personService.getById(id);
+        return personService.getPersonById(id);
     }
+
+    @DeleteMapping("/{id}")
+    PersonResponse deletePersonById(@PathVariable Long id){
+        return personService.deletePersonBuId(id);
+    }
+
 }

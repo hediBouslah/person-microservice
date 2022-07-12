@@ -52,7 +52,7 @@ public class PersonService {
     }
 
     public PersonResponse updatePerson(PersonRequest personRequest, Long id) {
-        Person existingPersonEntity = getById(id);
+        Person existingPersonEntity = getPersonById(id);
 
         existingPersonEntity.setFirstName(personRequest.getFirstName());
         existingPersonEntity.setLastName(personRequest.getLastName());
@@ -68,7 +68,13 @@ public class PersonService {
         return personRepository.getPersons();
     }
 
-    public Person getById(Long id) {
-        return personRepository.findById(id).orElseThrow(() -> new TechnicalException("Not found"));
+    public Person getPersonById(Long id) {
+        return personRepository.findById(id).orElseThrow(() -> new TechnicalException("Person Not found"));
+    }
+
+    public PersonResponse deletePersonBuId(Long id) {
+        PersonResponse personResponse = PersonMapper.MapToPersonResponse(getPersonById(id));
+        personRepository.deleteById(id);
+        return personResponse;
     }
 }
