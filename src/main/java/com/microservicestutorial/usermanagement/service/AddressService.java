@@ -1,16 +1,15 @@
 package com.microservicestutorial.usermanagement.service;
 
+import com.microservicestutorial.usermanagement.exception.TechnicalException;
 import com.microservicestutorial.usermanagement.persistence.Address;
 import com.microservicestutorial.usermanagement.persistence.AddressRepository;
+import com.microservicestutorial.usermanagement.resource.mapper.AddressMapper;
+import com.microservicestutorial.usermanagement.resource.to.AddressRequest;
+import com.microservicestutorial.usermanagement.resource.to.AddressResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class AddressService {
@@ -21,43 +20,55 @@ public class AddressService {
         this.addressRepository = addressRepository;
     }
 
-    public Address createAddress(Address address){
-        return addressRepository.save(address);
-    }
-
-    public Address updateAddress(Address newAddress){
-        Optional<Address> addressToUpdate = addressRepository.findById(newAddress.getAddressId());
-        if(addressToUpdate.isPresent()) {
-            Address _address = addressToUpdate.get();
-
-            _address.setStreet(newAddress.getStreet());
-            _address.setCity(newAddress.getCity());
-            _address.setCountry(newAddress.getCountry());
-
-            return addressRepository.save(_address);
+    public AddressResponse createAddress(AddressRequest addressRequest) {
+        Address addressEntity = AddressMapper.MapToAddressEntity(addressRequest);
+        try {
+            addressRepository.save(addressEntity);
+        } catch (Exception e) {
+            throw new TechnicalException("CAN NOT CREATE ADDRESS");
         }
-        return null;
+
+        return AddressMapper.MapToAddressResponse(addressEntity);
     }
 
-    public Optional<Address> findByAddressId(Long id){
-        return Optional.ofNullable(addressRepository.findByAddressId(id));
+    public AddressResponse updateAddress(AddressRequest addressRequest, Long id) {
+        Address existingAddress = getAddressById(id);
+
+        existingAddress.setStreet(addressRequest.getStreet());
+        existingAddress.setCity(addressRequest.getCity());
+        existingAddress.setCountry(addressRequest.getCountry());
+        if (addressRequest.getPersonId() != null)
+            existingAddress.setPersonId(addressRequest.getPersonId());
+
+        addressRepository.save(existingAddress);
+
+        return AddressMapper.MapToAddressResponse(existingAddress);
     }
 
-    public List<Address> findAllOrderByCountryAsc(){
-        return addressRepository.findAll(Sort.by("country"));
+    public Address getAddressById(Long id) {
+        return addressRepository.findById(id).orElseThrow(() -> new TechnicalException("Address Not Found"));
     }
 
-    public Optional<List<Address>> findAddressByCountry(String country){
-        return Optional.ofNullable(addressRepository.findByCountry(country));
+    public List<Address> getAll() {
+        return addressRepository.findAll();
     }
 
-    public void deleteAddressByAddressId(Long id){
-        addressRepository.deleteAddressByAddressId(id);
+    public AddressResponse deleteAddressById(Long id) {
+        AddressResponse addressResponse = AddressMapper.MapToAddressResponse(getAddressById(id));
+        addressRepository.deleteById(id);
+        return addressResponse;
     }
 
-    public Page<Address> findAllPaged(Pageable pageRequest){
-        Pageable pageParams = PageRequest.of(pageRequest.getPageNumber(), pageRequest.getPageSize());
-        return addressRepository.findAll(pageParams);
-    }
-
+//    public List<Address> findAllOrderByCountryAsc(){
+//        return addressRepository.findAll(Sort.by("country"));
+//    }
+//
+//    public Optional<List<Address>> findAddressByCountry(String country){
+//        return Optional.ofNullable(addressRepository.findByCountry(country));
+//    }
+//
+//    public Page<Address> findAllPaged(Pageable pageRequest){
+//        Pageable pageParams = PageRequest.of(pageRequest.getPageNumber(), pageRequest.getPageSize());
+//        return addressRepository.findAll(pageParams);
+//    }
 }

@@ -11,9 +11,11 @@ public interface PersonRepository extends CrudRepository<Person, Long> {
 
 
     @Query(value = "select * from t_persons" ,nativeQuery = true)
-    List<Person> getPs();
+    List<Person> getPersons();
 
-    @Query(value = "select * from t_addresses a where a.person_id = t_persons.id", nativeQuery = true)
-    Address getAddressFromPerson(Long personId);
+//    @Query(value = "select * from t_addresses a where a.person_id = t_persons.id", nativeQuery = true)
+//    Address getAddressFromPerson(Long personId);
+
+
 
 }

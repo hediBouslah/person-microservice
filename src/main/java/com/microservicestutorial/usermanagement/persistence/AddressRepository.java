@@ -7,7 +7,10 @@ import java.util.List;
 
 @Repository
 public interface AddressRepository extends JpaRepository<Address, Long> {
-    List<Address> findByCountry(String country);
-    Address findByAddressId(Long id);
-    void deleteAddressByAddressId(Long id);
+
+//    List<Address> findByCountry(String country);
+//
+//    //Address findByAddressId(Long id);
+//
+//    void deleteAddressByAddressId(Long id);
 }
