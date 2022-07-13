@@ -13,7 +13,7 @@ public class AddressMapper {
         address.setStreet(addressRequest.getStreet());
         address.setCity(addressRequest.getCity());
         address.setCountry(addressRequest.getCountry());
-        address.setPersonId(address.getPersonId());
+        address.setPersonId(addressRequest.getPersonId());
 
         return address;
     }
