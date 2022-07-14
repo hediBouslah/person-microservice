@@ -3,6 +3,8 @@ package com.microservicestutorial.usermanagement.resource;
 import com.microservicestutorial.usermanagement.persistence.Person;
 import com.microservicestutorial.usermanagement.resource.to.PersonRequest;
 import com.microservicestutorial.usermanagement.resource.to.PersonResponse;
+import com.microservicestutorial.usermanagement.resource.to.PersonWithAddressRequest;
+import com.microservicestutorial.usermanagement.resource.to.PersonWithAddressResponse;
 import com.microservicestutorial.usermanagement.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -45,5 +47,12 @@ public class PersonRestService {
     PersonResponse deletePersonById(@PathVariable Long id){
         return personService.deletePersonBuId(id);
     }
+
+
+    @PostMapping("/withAddress/")
+    PersonWithAddressResponse createPersonWithAddress(@RequestBody PersonWithAddressRequest personWithAddressRequest){
+        return personService.createPersonWithAddress(personWithAddressRequest);
+    }
+
 
 }

@@ -1,8 +1,9 @@
 package com.microservicestutorial.usermanagement.resource.mapper;
 
 import com.microservicestutorial.usermanagement.persistence.Person;
-import com.microservicestutorial.usermanagement.resource.to.PersonRequest;
-import com.microservicestutorial.usermanagement.resource.to.PersonResponse;
+import com.microservicestutorial.usermanagement.resource.to.*;
+
+import java.util.List;
 
 public class PersonMapper {
     public static Person MapToPersonEntity(PersonRequest personRequest) {
@@ -32,4 +33,16 @@ public class PersonMapper {
 
         return personResponse;
     }
+
+    public static PersonRequest ExtractPersonRequest(PersonWithAddressRequest personWithAddressRequest) {
+        return new PersonRequest();
+    }
+
+    public static PersonWithAddressResponse MapToPersonWithAddressResponse(PersonWithAddressRequest personWithAddressRequest) {
+        return new PersonWithAddressResponse();
+    }
+
+//    public static List<AddressWithinPersonRequest> ExtractAddressWithinPersonRequest(PersonWithAddressRequest personWithAddressRequest) {
+//
+//    }
 }

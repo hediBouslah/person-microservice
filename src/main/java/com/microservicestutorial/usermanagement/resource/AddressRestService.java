@@ -48,7 +48,6 @@ public class AddressRestService {
         return addressService.deleteAddressById(id);
     }
 
-
 //    @GetMapping("/v1/address")
 //    public ResponseEntity<List<Address>> findAllOrderByCountryAsc(){
 //        return new ResponseEntity<>(addressService.findAllOrderByCountryAsc(), HttpStatus.OK);

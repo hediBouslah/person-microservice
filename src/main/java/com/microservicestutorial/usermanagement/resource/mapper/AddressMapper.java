@@ -3,6 +3,7 @@ package com.microservicestutorial.usermanagement.resource.mapper;
 import com.microservicestutorial.usermanagement.persistence.Address;
 import com.microservicestutorial.usermanagement.resource.to.AddressRequest;
 import com.microservicestutorial.usermanagement.resource.to.AddressResponse;
+import com.microservicestutorial.usermanagement.resource.to.AddressWithinPersonRequest;
 
 public class AddressMapper {
     public static Address MapToAddressEntity(AddressRequest addressRequest) {
@@ -31,4 +32,7 @@ public class AddressMapper {
     }
 
 
+    public static AddressRequest MapToAddressRequest(AddressWithinPersonRequest addressWithinPersonRequestItem) {
+        return new AddressRequest();
+    }
 }

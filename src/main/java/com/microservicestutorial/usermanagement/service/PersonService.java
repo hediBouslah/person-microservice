@@ -3,9 +3,9 @@ package com.microservicestutorial.usermanagement.service;
 import com.microservicestutorial.usermanagement.exception.TechnicalException;
 import com.microservicestutorial.usermanagement.persistence.Person;
 import com.microservicestutorial.usermanagement.persistence.PersonRepository;
+import com.microservicestutorial.usermanagement.resource.mapper.AddressMapper;
 import com.microservicestutorial.usermanagement.resource.mapper.PersonMapper;
-import com.microservicestutorial.usermanagement.resource.to.PersonRequest;
-import com.microservicestutorial.usermanagement.resource.to.PersonResponse;
+import com.microservicestutorial.usermanagement.resource.to.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +23,9 @@ public class PersonService {
     public PersonService(PersonRepository personRepository) {
         this.personRepository = personRepository;
     }
+
+    @Autowired
+    AddressService addressService;
 
     public Integer calculateAge(Person person) {
         Calendar calendar = new GregorianCalendar();
@@ -76,5 +79,20 @@ public class PersonService {
         PersonResponse personResponse = PersonMapper.MapToPersonResponse(getPersonById(id));
         personRepository.deleteById(id);
         return personResponse;
+    }
+
+    public PersonWithAddressResponse createPersonWithAddress(PersonWithAddressRequest personWithAddressRequest) {
+        PersonRequest personRequest = PersonMapper.ExtractPersonRequest(personWithAddressRequest);
+//        List<AddressWithinPersonRequest> addressWithinPersonRequestList = PersonMapper.ExtractAddressWithinPersonRequest(personWithAddressRequest);
+
+        createPerson(personRequest);
+
+//        addressWithinPersonRequestList.stream().map(addressWithinPersonRequestItem -> {
+//            AddressRequest addressRequest = AddressMapper.MapToAddressRequest(addressWithinPersonRequestItem);
+//            addressService.createAddress(addressRequest);
+//            return null;
+//        });
+
+        return PersonMapper.MapToPersonWithAddressResponse(personWithAddressRequest);
     }
 }
