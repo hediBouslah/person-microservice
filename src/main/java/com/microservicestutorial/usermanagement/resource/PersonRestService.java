@@ -53,6 +53,4 @@ public class PersonRestService {
     PersonWithAddressResponse createPersonWithAddress(@RequestBody PersonWithAddressRequest personWithAddressRequest){
         return personService.createPersonWithAddress(personWithAddressRequest);
     }
-
-
 }

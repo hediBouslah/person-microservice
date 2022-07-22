@@ -9,7 +9,7 @@ public class PersonMapper {
     public static Person MapToPersonEntity(PersonRequest personRequest) {
         Person person = new Person();
 
-        if(personRequest.getId() != null){
+        if (personRequest.getId() != null) {
             person.setPersonId(personRequest.getId());
         }
         person.setFirstName(personRequest.getFirstName());
@@ -35,14 +35,26 @@ public class PersonMapper {
     }
 
     public static PersonRequest ExtractPersonRequest(PersonWithAddressRequest personWithAddressRequest) {
-        return new PersonRequest();
+        PersonRequest personRequest = new PersonRequest();
+
+        System.out.println("get personRequest: " + personWithAddressRequest.getPersonRequest());
+
+//        personRequest.setFirstName(personWithAddressRequest.getPersonRequest().getFirstName());
+//        personRequest.setLastName(personWithAddressRequest.getPersonRequest().getLastName());
+//        personRequest.setBirthdate(personWithAddressRequest.getPersonRequest().getBirthdate());
+//        personRequest.setPhoneNumber(personWithAddressRequest.getPersonRequest().getPhoneNumber());
+//        personRequest.setDepartmentId(personWithAddressRequest.getPersonRequest().getDepartmentId());
+
+        return personRequest;
     }
 
-    public static PersonWithAddressResponse MapToPersonWithAddressResponse(PersonWithAddressRequest personWithAddressRequest) {
-        return new PersonWithAddressResponse();
-    }
 
-//    public static List<AddressWithinPersonRequest> ExtractAddressWithinPersonRequest(PersonWithAddressRequest personWithAddressRequest) {
-//
-//    }
+    public static PersonWithAddressResponse MapToPersonWithAddressResponse(PersonResponse personResponse, List<AddressResponse> addressResponseList) {
+        PersonWithAddressResponse personWithAddressResponse = new PersonWithAddressResponse();
+
+        personWithAddressResponse.setPersonResponse(personResponse);
+        personWithAddressResponse.setAddressResponseList(addressResponseList);
+
+        return personWithAddressResponse;
+    }
 }

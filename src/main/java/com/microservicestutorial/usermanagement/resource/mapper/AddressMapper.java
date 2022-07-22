@@ -32,7 +32,14 @@ public class AddressMapper {
     }
 
 
-    public static AddressRequest MapToAddressRequest(AddressWithinPersonRequest addressWithinPersonRequestItem) {
-        return new AddressRequest();
+    public static AddressRequest MapToAddressRequest(AddressWithinPersonRequest addressWithinPersonRequest, Long personId) {
+        AddressRequest addressRequest = new AddressRequest();
+
+        addressRequest.setStreet(addressWithinPersonRequest.getStreet());
+        addressRequest.setCity(addressWithinPersonRequest.getCity());
+        addressRequest.setCountry(addressWithinPersonRequest.getCountry());
+        addressRequest.setPersonId(personId);
+
+        return addressRequest;
     }
 }

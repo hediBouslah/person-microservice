@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -82,17 +83,23 @@ public class PersonService {
     }
 
     public PersonWithAddressResponse createPersonWithAddress(PersonWithAddressRequest personWithAddressRequest) {
+
         PersonRequest personRequest = PersonMapper.ExtractPersonRequest(personWithAddressRequest);
-//        List<AddressWithinPersonRequest> addressWithinPersonRequestList = PersonMapper.ExtractAddressWithinPersonRequest(personWithAddressRequest);
+        List<AddressWithinPersonRequest> addressWithinPersonRequestList = personWithAddressRequest.getAddressWithinPersonRequestList();
 
-        createPerson(personRequest);
+        PersonResponse personResponse = createPerson(personRequest);
 
-//        addressWithinPersonRequestList.stream().map(addressWithinPersonRequestItem -> {
-//            AddressRequest addressRequest = AddressMapper.MapToAddressRequest(addressWithinPersonRequestItem);
-//            addressService.createAddress(addressRequest);
-//            return null;
-//        });
+        List<AddressResponse> addressResponseList = new ArrayList<AddressResponse>();
+        
+        addressWithinPersonRequestList
+                .stream()
+                .map(
+                        addressWithinPersonRequestItem -> {
+                            AddressRequest addressRequest = AddressMapper.MapToAddressRequest(addressWithinPersonRequestItem, personResponse.getId());
+                            System.out.println("addressRequest : " + addressRequest);
+                            return addressResponseList.add(addressService.createAddress(addressRequest));
+                        });
 
-        return PersonMapper.MapToPersonWithAddressResponse(personWithAddressRequest);
+        return PersonMapper.MapToPersonWithAddressResponse(personResponse, addressResponseList);
     }
 }
